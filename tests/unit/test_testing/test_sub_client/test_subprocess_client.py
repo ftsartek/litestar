@@ -35,7 +35,7 @@ def fx_sync_client() -> Iterator[httpx.Client]:
 
 async def test_run_app() -> None:
     """Ensure that method returns application url if started successfully"""
-    with run_app(workdir=ROOT, app=APP) as url:
+    with run_app(workdir=ROOT, app=APP, capture_output=False) as url:
         assert isinstance(url, str)
         assert url.startswith("http://127.0.0.1:")
 
@@ -46,7 +46,7 @@ async def test_run_app_exception() -> None:
     To simulate this, we set retry_count=0, so that we don't check if the application has started.
     """
     with pytest.raises(StartupError):
-        with run_app(workdir=ROOT, app=APP, retry_count=0):
+        with run_app(workdir=ROOT, app=APP, retry_count=0, capture_output=False):
             ...
 
 
